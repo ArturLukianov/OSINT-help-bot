@@ -24,7 +24,10 @@ def gen_node_markup(node):
 
 @bot.message_handler(commands=['start'])
 def start_handler(message):
-    bot.send_message(message.chat.id, "Чем я могу вам помочь?", reply_markup=gen_node_markup([1,2,3]), parse_mode='Markdown')
+    try:
+        bot.send_message(message.chat.id, "Чем я могу вам помочь?", reply_markup=gen_node_markup([1,2,3]), parse_mode='Markdown')
+    except Exception as e:
+        bot.send_message(message.chat.id, str(e))
 
 # Server
 
