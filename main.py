@@ -15,8 +15,8 @@ def gen_node_markup(node):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     buttons = []
-    for i, element in enumnerate(node):
-        buttons.append(InlineKeyboardButton("OSINT", callback_data="node_id"))
+    for i, element in enumerate(node):
+        buttons.append(InlineKeyboardButton("OSINT", callback_data="node_" + str(i)))
     markup.add(*buttons)
     return markup
 
