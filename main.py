@@ -8,11 +8,22 @@ server_url = os.environ.get('SERVER_URL')
 
 bot = telebot.TeleBot(TOKEN)
 
+# Markups
+
+def gen_node_markup(node):
+    markup = InlineKeyboardMarkup()
+    markup.row_width = 1
+    buttons = []
+    for element in node:
+        buttons.append(InlineKeyboardButton("OSINT", callback_data="node_id"))
+    markup.add(*buttons)
+    return markup
+
 # Handlers
 
 @bot.message_handler(commands=['start'])
 def start_handler(message):
-    bot.send_message(message.chat.id, "Бот работает!")
+    bot.send_message(message.chat.id, "Чем я могу вам помочь?", reply_markup=gen_node_markup([1,2,3]), parse_mode='Markdown')
 
 # Server
 
