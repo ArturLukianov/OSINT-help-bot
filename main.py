@@ -3,20 +3,25 @@ import re
 from flask import Flask, request
 import os
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+import json
+
 
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
 server_url = os.environ.get('SERVER_URL')
+
+
+root_node = json.load(open('arf.json'))
 
 bot = telebot.TeleBot(TOKEN)
 
 # Markups
 
-def gen_node_markup(node):
+def gen_node_markup(nodes, base_id):
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     buttons = []
-    for i, element in enumerate(node):
-        buttons.append(InlineKeyboardButton("OSINT", callback_data="node_" + str(i)))
+    for i, node in enumerate(nodes):
+        buttons.append(InlineKeyboardButton(node, callback_data=base_id + "_" + str(i)))
     markup.add(*buttons)
     return markup
 
@@ -25,7 +30,7 @@ def gen_node_markup(node):
 @bot.message_handler(commands=['start'])
 def start_handler(message):
     try:
-        bot.send_message(message.chat.id, "Чем я могу вам помочь?", reply_markup=gen_node_markup([1,2,3]), parse_mode='Markdown')
+        bot.send_message(message.chat.id, root_node['name'], reply_markup=gen_node_markup(root_node['children'], 'i'), parse_mode='Markdown')
     except Exception as e:
         bot.send_message(message.chat.id, str(e))
 
