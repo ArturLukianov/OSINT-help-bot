@@ -22,6 +22,8 @@ def gen_node_markup(nodes, base_id):
     buttons = []
     for i, node in enumerate(nodes):
         buttons.append(InlineKeyboardButton(node['name'], callback_data=base_id + "_" + str(i)))
+    if base_id != 'i':
+        buttons.append(InlineKeyboardButton('<<', callback_data=base_id))
     markup.add(*buttons)
     return markup
 
