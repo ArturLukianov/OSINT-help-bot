@@ -11,11 +11,14 @@ bot = telebot.TeleBot(TOKEN)
 # Markups
 
 def gen_node_markup(node):
+    print(node)
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     buttons = []
-    for element in node:
+    for i, element in enumnerate(node):
         buttons.append(InlineKeyboardButton("OSINT", callback_data="node_id"))
+
+    print(buttons)
     markup.add(*buttons)
     return markup
 
