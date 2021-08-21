@@ -25,6 +25,11 @@ def gen_node_markup(nodes, base_id):
     markup.add(*buttons)
     return markup
 
+def get_node(node, node_path):
+    if node_path == []:
+        return node
+    return get_node(node['children'][node_path[0]], node_path[1:])
+
 # Handlers
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -33,8 +38,11 @@ def callback_node(call):
         cid = call.message.chat.id
         mid = call.message.message_id
         node_id = call.data
+        node_path = list(map(int, node_id.split('_')[1:]))
+
+        node = get_node(root_node, node_path)
         
-        bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]['children'], node_id), parse_mode='Markdown')
+        bot.edit_message_text(chat_id=cid, message_id=mid, text=node['name'], reply_markup=gen_node_markup(node['children'], node_id), parse_mode='Markdown')
     except Exception as e:
         bot.send_message(cid, str(e))
 
