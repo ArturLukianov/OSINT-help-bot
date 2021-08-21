@@ -2,6 +2,7 @@ import telebot
 import re
 from flask import Flask, request
 import os
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
 server_url = os.environ.get('SERVER_URL')
@@ -11,14 +12,11 @@ bot = telebot.TeleBot(TOKEN)
 # Markups
 
 def gen_node_markup(node):
-    print(node)
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
     buttons = []
     for i, element in enumnerate(node):
         buttons.append(InlineKeyboardButton("OSINT", callback_data="node_id"))
-
-    print(buttons)
     markup.add(*buttons)
     return markup
 
