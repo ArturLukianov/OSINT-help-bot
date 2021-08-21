@@ -21,7 +21,10 @@ def gen_node_markup(nodes, base_id):
     markup.row_width = 1
     buttons = []
     for i, node in enumerate(nodes):
-        buttons.append(InlineKeyboardButton(node['name'], callback_data=base_id + "_" + str(i)))
+        if node['type'] == 'folder':
+            buttons.append(InlineKeyboardButton('📁 ' + node['name'], callback_data=base_id + "_" + str(i)))
+        else:
+            buttons.append(InlineKeyboardButton('🌐 ' + node['name'], url=node['url']))
     if base_id != 'i':
         buttons.append(InlineKeyboardButton('<<', callback_data='_'.join(base_id.split('_')[:-1])))
     markup.add(*buttons)
