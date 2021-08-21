@@ -27,6 +27,14 @@ def gen_node_markup(nodes, base_id):
 
 # Handlers
 
+@bot.callback_query_handler(func=lambda call: call.data.startswith("i"))
+def callback_quaters_misc(call):
+    cid = call.message.chat.id
+    mid = call.message.message_id
+
+    bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]), parse_mode='Markdown')
+
+
 @bot.message_handler(commands=['start'])
 def start_handler(message):
     try:
