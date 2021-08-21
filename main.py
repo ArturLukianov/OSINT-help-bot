@@ -32,8 +32,9 @@ def callback_node(call):
     try:
         cid = call.message.chat.id
         mid = call.message.message_id
+        node_id = call.data
         
-        bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]), parse_mode='Markdown')
+        bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0], node_id), parse_mode='Markdown')
     except Exception as e:
         bot.send_message(cid, str(e))
 
