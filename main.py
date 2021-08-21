@@ -35,7 +35,7 @@ def callback_node(call):
         
         bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]), parse_mode='Markdown')
     except Exception as e:
-        bot.send_message(message.chat.id, str(e))
+        bot.send_message(cid, str(e))
 
 
 @bot.message_handler(commands=['start'])
