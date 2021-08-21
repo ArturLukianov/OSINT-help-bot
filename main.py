@@ -27,8 +27,8 @@ def gen_node_markup(nodes, base_id):
 
 # Handlers
 
-@bot.callback_query_handler(func=lambda call: call.data.startswith("i"))
-def callback_quaters_misc(call):
+@bot.callback_query_handler(func=lambda call: True)
+def callback_node(call):
     try:
         cid = call.message.chat.id
         mid = call.message.message_id
