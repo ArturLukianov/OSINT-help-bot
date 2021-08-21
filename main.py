@@ -29,10 +29,13 @@ def gen_node_markup(nodes, base_id):
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("i"))
 def callback_quaters_misc(call):
-    cid = call.message.chat.id
-    mid = call.message.message_id
-
-    bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]), parse_mode='Markdown')
+    try:
+        cid = call.message.chat.id
+        mid = call.message.message_id
+        
+        bot.edit_message_text(chat_id=cid, message_id=mid, text=root_node['children'][0]['name'], reply_markup=gen_node_markup(root_node['children'][0]), parse_mode='Markdown')
+    except Exception as e:
+        bot.send_message(message.chat.id, str(e))
 
 
 @bot.message_handler(commands=['start'])
